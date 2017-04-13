@@ -1,4 +1,8 @@
 import angular from 'angular';
+import uiRouter from 'angular-ui-router';
+
+import 'bootstrap/dist/css/bootstrap.css';
+import '../style/app.css';
 
 let app = () => {
   return {
@@ -14,9 +18,26 @@ class AppCtrl {
   }
 }
 
-const MODULE_NAME = 'app';
+const MODULE_NAME = 'angularfireSlackApp';
 
-angular.module(MODULE_NAME, [])
+angular.module(MODULE_NAME, [uiRouter])
+  .config(function($stateProvider, $urlRouterProvider) {
+    $stateProvider
+      .state('home', {
+        url: '/',
+        template: require('./home/home.html')
+      })
+      .state('login', {
+        url: '/login',
+        template: require('./auth/login.html')
+      })
+      .state('register', {
+        url: '/register',
+        template: require('./auth/register.html')
+      })
+
+    $urlRouterProvider.otherwise('/');
+  })
   .directive('app', app)
   .controller('AppCtrl', AppCtrl);
 
